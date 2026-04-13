@@ -1,0 +1,27 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Receipt Slayer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/The-Hallucination-Hunters
+            git pull origin main
+            docker compose build --no-cache
+            docker compose up -d
+            sleep 5
+            echo "--- Container Status ---"
+            docker compose ps
+            echo "--- Health Check ---"
+            curl -sf http://localhost:3000/api/samples && echo " API OK" || echo " API FAILED"

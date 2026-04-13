@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chat Insights - Financial Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Main Report Content (Blurred/Dimmed Background) -->
+<main class="flex-1 flex flex-col p-8 opacity-40 pointer-events-none">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h1 class="text-2xl font-bold">Quarterly Financial Report</h1>
+<p class="text-slate-500">Q3 2023 - Enterprise Overview</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="h-40 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700"></div>
+<div class="h-40 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700"></div>
+<div class="h-80 col-span-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700"></div>
+</div>
+</main>
+<!-- Chat Insights Drawer -->
+<aside class="w-[450px] h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700 flex flex-col shadow-2xl relative z-10">
+<!-- Header -->
+<header class="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+</div>
+<div>
+<h2 class="text-base font-bold leading-tight">Chat Insights</h2>
+<p class="text-xs text-slate-500">AI Assistant powered by GPT-4</p>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</header>
+<!-- Chat Content -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+<!-- Initial Message -->
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="bg-slate-100 dark:bg-slate-800 px-4 py-3 rounded-tr-xl rounded-br-xl rounded-bl-xl text-sm leading-relaxed max-w-[320px]">
+                            Hello! I've finished analyzing your Q3 spending reports. There's a 12% increase in operational costs. What would you like to explore?
+                        </div>
+</div>
+</div>
+<!-- Suggested Questions Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary hover:bg-primary/5 transition-all text-xs font-medium text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px] text-primary">category</span>
+                        Top category
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary hover:bg-primary/5 transition-all text-xs font-medium text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px] text-primary">payments</span>
+                        Total spend
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary hover:bg-primary/5 transition-all text-xs font-medium text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px] text-primary">trending_up</span>
+                        Largest expense
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary hover:bg-primary/5 transition-all text-xs font-medium text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px] text-primary">flight</span>
+                        Show travel
+                    </button>
+</div>
+<!-- User Message -->
+<div class="flex items-start gap-3 justify-end">
+<div class="flex flex-col gap-2 items-end">
+<div class="bg-primary px-4 py-3 rounded-tl-xl rounded-bl-xl rounded-br-xl text-sm text-white shadow-md shadow-primary/20 max-w-[300px]">
+                            Break down the travel expenses and show the top merchant.
+                        </div>
+</div>
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0 border border-slate-300 dark:border-slate-600">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-OGL6K1Ei1HAXeJLPTqZMSq27onJNUf_iBhWHC6LDgMHC8h_ybjS1dMi8KJiP5t8JgszqAvfd0Oix5Vyb_X1_iFdl6yKaGjIuOxigFAw3-fasUang2i8LPmYfMAmIvdeyucBoUNmIhvWjCLfcjSyJlVEFxcg8GzZ_IwRHnZF4U_4RQJKtTVbqZwmUWbxbOPV-_VAM0zaajL5hcmY0qxTDeOxyBhtpgec7lZ-PS8pwFW5WNbyhwBWifCkxxhQm-3fZCE8mZKU81kM"/>
+</div>
+</div>
+<!-- AI Response with Referenced Values -->
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-slate-100 dark:bg-slate-800 px-4 py-3 rounded-tr-xl rounded-br-xl rounded-bl-xl text-sm leading-relaxed max-w-[320px]">
+                            Travel expenses totaled $42,500 this quarter. The largest portion was international flights for the sales team.
+                        </div>
+<!-- Referenced Values Section -->
+<div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden max-w-[320px]">
+<div class="bg-slate-50 dark:bg-slate-700/50 px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+<span class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Referenced Values</span>
+<span class="material-symbols-outlined text-[14px] text-slate-400">info</span>
+</div>
+<div class="p-3 space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-500">Total Travel</span>
+<span class="text-xs font-bold text-primary">$42,500.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-500">Top Merchant</span>
+<span class="text-xs font-bold">Delta Airlines</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-500">Flights %</span>
+<span class="text-xs font-bold text-emerald-500">68%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Typing Indicator -->
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+</div>
+<div class="flex gap-1.5 px-4 py-3 bg-slate-100 dark:bg-slate-800 rounded-full">
+<div class="size-1.5 bg-slate-400 rounded-full animate-bounce"></div>
+<div class="size-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+<div class="size-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<footer class="p-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+<div class="relative flex items-center gap-2">
+<div class="relative flex-1">
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-full pl-4 pr-10 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-400" placeholder="Ask about your reports..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+</div>
+<button class="size-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+<p class="text-[10px] text-center text-slate-400 mt-3 italic">
+                    AI can make mistakes. Check important info.
+                </p>
+</footer>
+</aside>
+</div>
+</body></html>

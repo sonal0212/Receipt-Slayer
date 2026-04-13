@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review &amp; Categorize Expense</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1152d4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4 lg:px-10">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Review Expense</h2>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span>Expenses</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-medium text-primary">Review &amp; Categorize</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">close</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-6 py-8 lg:px-10 max-w-7xl mx-auto w-full">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Panel: Receipt Preview -->
+<div class="lg:col-span-5 xl:col-span-4">
+<div class="sticky top-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Receipt Preview</span>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-slate-500"><span class="material-symbols-outlined text-sm">zoom_in</span></button>
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-slate-500"><span class="material-symbols-outlined text-sm">fullscreen</span></button>
+</div>
+</div>
+<div class="aspect-[3/4] bg-slate-100 dark:bg-slate-950 flex items-center justify-center relative">
+<div class="w-full h-full bg-cover bg-center" data-alt="A close up photo of a printed paper business receipt" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTXOMbvhYlVChM3xL8JNEO3Qnoj8l0B4n9pjKgLMjm9kUsLhXWy8gW5IoQ7SNUriH7QPRse5rLjsLXBa4HzxmYFaB3sV73hauaBvKrzVRtFYl0C7DGv03qaJuNyVBgS9-Jxl0dq84pDY4oUJNhzuqBnSeILAA2DDGUv-t0BCxjQwDRRqa6oUJ8YgWv12j28YCwU--W96OIXKziMNXT7uJaTBanwli5j0kPbYB8DY2t92-RUA47mVI3BoN7Unsk7fcqysvCh_I2RMU')"></div>
+<!-- Overlay for scanning effect -->
+<div class="absolute inset-0 border-2 border-primary/30 pointer-events-none"></div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Editable Fields -->
+<div class="lg:col-span-7 xl:col-span-8 space-y-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 lg:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+<h3 class="text-xl font-bold mb-6">Expense Information</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Merchant (Low Confidence Highlighting) -->
+<div class="md:col-span-2 space-y-2">
+<div class="flex justify-between items-center">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Merchant</label>
+<span class="flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+<span class="material-symbols-outlined text-[12px]">warning</span> Needs review
+                                </span>
+</div>
+<div class="relative group">
+<input class="w-full h-12 px-4 rounded-lg border-2 border-amber-300 dark:border-amber-700/50 bg-amber-50/30 dark:bg-amber-900/10 focus:ring-amber-500 focus:border-amber-500 transition-all font-medium" type="text" value="Blue Bottle Coffee"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-amber-500">edit</span>
+</div>
+</div>
+<!-- Date -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Transaction Date</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 focus:ring-primary focus:border-primary" type="date" value="2023-11-15"/>
+</div>
+</div>
+<!-- Amount -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Total Amount (USD)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 font-medium text-slate-400">$</span>
+<input class="w-full h-12 pl-8 pr-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 focus:ring-primary focus:border-primary font-bold text-lg" type="text" value="14.50"/>
+</div>
+</div>
+<!-- Category Suggestion Popup Logic -->
+<div class="md:col-span-2 relative mt-4">
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-5 mb-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary uppercase tracking-wider">AI Suggestion</p>
+<h4 class="text-lg font-bold">Travel &amp; Meals</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400">98% Match confidence based on merchant history</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">Accept</button>
+<button class="px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">Change</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Category Dropdown -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Category</label>
+<select class="w-full h-12 px-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 focus:ring-primary focus:border-primary">
+<option selected="">Travel &amp; Meals</option>
+<option>Office Supplies</option>
+<option>Software Subscription</option>
+<option>Marketing</option>
+<option>Hardware</option>
+</select>
+</div>
+<!-- Expense Type -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Expense Type</label>
+<div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-lg h-12">
+<button class="flex-1 flex items-center justify-center gap-2 rounded-md bg-white dark:bg-slate-700 shadow-sm text-sm font-bold text-primary">
+<span class="material-symbols-outlined text-sm">business_center</span>
+                                    Business
+                                </button>
+<button class="flex-1 flex items-center justify-center gap-2 rounded-md text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
+<span class="material-symbols-outlined text-sm">person</span>
+                                    Personal
+                                </button>
+</div>
+</div>
+<!-- Project/Tag (Optional) -->
+<div class="md:col-span-2 space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Project / Billable To</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400">label</span>
+<input class="w-full h-12 pl-12 pr-4 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 focus:ring-primary focus:border-primary" placeholder="Search projects..." type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex flex-col sm:flex-row items-center justify-end gap-4 pb-12">
+<button class="w-full sm:w-auto px-8 h-12 rounded-lg text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors">
+                        Save as Draft
+                    </button>
+<button class="w-full sm:w-auto px-10 h-12 rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all active:scale-95">
+                        Confirm Expense
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

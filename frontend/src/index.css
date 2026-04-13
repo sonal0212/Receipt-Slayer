@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1152d4;
+  --color-primary-hover: #0e43b0;
+  --color-primary-light: #e8eefb;
+  --color-primary-bg: #f0f4fd;
+  --color-primary-border: #b8ccf0;
+  --color-accent: #7ba3e8;
+  --color-bg-light: #f6f6f8;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--color-bg-light);
+}
+
+/* Custom scrollbar for chat */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>Receipt Slayer - Enterprise OCR</title>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Navigation Header -->
+<header class="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-icons text-white text-lg">receipt_long</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Receipt Slayer</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-primary border-b-2 border-primary py-5" href="#">Upload</a>
+<a class="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white py-5 transition-colors" href="#">History</a>
+<a class="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white py-5 transition-colors" href="#">API Keys</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-slate-600 dark:text-slate-400">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+<span class="text-xs font-bold text-primary uppercase">JD</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-4 py-12">
+<!-- Hero Section -->
+<div class="text-center mb-12">
+<h1 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">
+                Intelligent Document Processing
+            </h1>
+<p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Upload receipts or invoices to extract structured data instantly using enterprise-grade OCR models.
+            </p>
+</div>
+<!-- Main Interaction Area -->
+<div class="space-y-6">
+<!-- Mode Toggle Card -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">Extraction Mode</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">Choose between live OCR or demo simulation.</p>
+</div>
+<div class="inline-flex p-1 bg-background-light dark:bg-slate-800 rounded-lg">
+<button class="px-4 py-2 text-sm font-medium rounded-md bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600">
+                            OCR Mode
+                        </button>
+<button class="px-4 py-2 text-sm font-medium rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
+                            Demo Safe (JSON)
+                        </button>
+</div>
+</div>
+</div>
+<!-- Upload Zone -->
+<div class="bg-white dark:bg-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-12 flex flex-col items-center justify-center text-center transition-all hover:border-primary/50 group">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-icons text-primary text-3xl">cloud_upload</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white">Drag &amp; drop your files</h3>
+<p class="text-slate-500 dark:text-slate-400">Support for JPG, PNG and PDF (Max 10MB)</p>
+</div>
+<div class="mt-8">
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-semibold shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+<span>Select File</span>
+</button>
+</div>
+</div>
+<!-- Loading State (Conditional Visibility) -->
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex items-center gap-6">
+<div class="relative w-12 h-12">
+<div class="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
+<div class="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+</div>
+<div class="flex-1">
+<h4 class="text-base font-semibold text-primary">Extracting...</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400">Our neural engine is processing your document. This usually takes 2-3 seconds.</p>
+</div>
+<div class="hidden sm:block">
+<span class="text-sm font-mono text-primary font-bold">45%</span>
+</div>
+</div>
+<!-- Preview/Queue Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex items-center p-3 gap-4 group">
+<div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded relative shrink-0">
+<img class="w-full h-full object-cover rounded opacity-80" data-alt="Close up of a paper business receipt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHQKEC46wwWojvdV8fnnUqgtu8Ej04erpgGJ0TE8JLspr8wddsN4DS5glSyyvf1Ntwi-g6LSX38xqMCOsVOZ-gQbQ4KRtD5klDscaZRbtGA05kuFeEjf2yicaYMqeu4kr115sXOnxfSBEGblc-GGVDkMP6G6NMuuDU-9yxN5mQqw9ZoYSpTSj4d8o-4xpQkOJcKeYRz-YwNzzX1ycLBFwwfk0SyG2Jlfm0eKWhR3c13l1pQ_a_R97-7oSQLToU8UDDtS94NH54oE8"/>
+<div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-900 dark:text-white truncate">receipt_0912.png</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1.2 MB • Processing</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex items-center p-3 gap-4 group">
+<div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded relative shrink-0">
+<img class="w-full h-full object-cover rounded opacity-80" data-alt="Grocery receipt showing line items on table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3nerUaJNXkUf0woBiWM72Ytk8IsUb2bo7LV4eJeRRADS9_jeM1cqkBR_p6zkY_g0qOO6k9PIbuv2_8ASeBEoemkRUmcSNpHtKtRgID0Lii4PWEfsYPpddSuxv743zMPHdPxFSTxhp3y4Tp7E8lmhEYtBDMOY0akzMgkF7tXbT0Ntndlzk2BZOSUDUa0NMaaSpP2axGXMQhMFL5JNPup4DUzn4wkfXVyxxUY-L8NkyLAQSeS_nTQb24CrmbMujPtAm8K-V07dzQog"/>
+<div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-900 dark:text-white truncate">starbucks_tax.jpg</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">844 KB • Ready</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Information Footer -->
+<footer class="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary/60">security</span>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase">Bank-Level Security</h4>
+<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Your data is encrypted end-to-end and SOC2 Type II compliant.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary/60">bolt</span>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase">Fast Extraction</h4>
+<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Average processing time under 2 seconds for single page docs.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary/60">integration_instructions</span>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase">API Ready</h4>
+<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Integrate Receipt Slayer into your workflow with our robust REST API.</p>
+</div>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

@@ -1,0 +1,543 @@
+FINAL MVP – Receipt Slayer (Expense Intelligence Engine)
+
+Hackathon Documentation Pack (BRD + FRD + TRD) + Figma/Stitch Prompt + Claude Build Prompt
+ 
+====================================================================
+
+SECTION 1 – BRD (FINAL MVP)
+
+====================================================================
+ 
+1. Executive Summary (max 5 lines)
+
+Receipt Slayer is an AI-enabled expense intake and reporting module that converts receipt images into structured expenses, auto-suggests categories, and generates a submission-ready report. Users review/edit extracted fields before confirming to ensure data quality. The MVP includes receipt upload, extraction, category suggestion, report generation, and a chat-based insights panel on the generated report. The solution is designed as a reusable “Expense Intelligence Engine” that can be plugged into PetroIT products through an adapter layer (not implemented in MVP).
+ 
+2. Refined Problem Statement
+
+Expense reporting is manual and error-prone: users collect receipts, type details, categorize spending, and format reports. This causes delays, mistakes, and inconsistent reporting. A lightweight module is required to extract receipt data, suggest categories, allow quick verification, generate exportable reports, and provide insights via natural language questions.
+ 
+3. Business Objectives (measurable)
+
+- Reduce manual entry time per receipt by 60–80%
+
+- Reduce categorization errors by 40%
+
+- Generate an exportable report in under 1 minute for a small receipt set
+
+- Provide “insights on demand” via chat on the generated report data
+ 
+4. Scope (In Scope / Out of Scope – MVP only)
+ 
+In Scope (MVP)
+
+- Upload receipt image (single; small batch optional if time permits)
+
+- Extract merchant, date, amount (currency optional)
+
+- Auto-suggest category with confidence score
+
+- User review/edit before confirm
+
+- Generate report export (CSV mandatory; PDF optional)
+
+- Chat Insights on generated report data (no SQL generation; chat reads report JSON)
+ 
+Out of Scope
+
+- Product SSO / login integration
+
+- Full configuration builder (drag-drop). MVP uses simple show/hide toggles.
+
+- Persistent multi-user DB + RDS + S3 (optional only if already ready)
+
+- Accounting/ERP integration, approvals, reimbursements workflow
+
+- Advanced analytics dashboards
+ 
+5. Target Users
+
+- Employees / contractors submitting reimbursement reports
+
+- Small ops/finance teams reviewing expense breakdowns
+ 
+6. Success Metrics
+
+- Extraction response < 6 seconds per receipt (or instant in fallback mode)
+
+- ≥80% correct extraction on sample receipts
+
+- Category suggestion available for every receipt
+
+- Export generated successfully and downloadable
+
+- Chat answers at least 5 standard questions accurately on report JSON
+ 
+7. Improvisation Opportunities (practical only)
+
+UX improvements
+
+- Highlight low-confidence fields; inline edit + validation
+
+- Side-by-side receipt image and extracted fields
+
+Automation ideas
+
+- Duplicate detection (same merchant+amount+date)
+
+Intelligence layer
+
+- Category suggestion + confidence
+
+- Simple anomaly flag: “high amount” vs average
+
+Validation improvements
+
+- Amount numeric/positive; date format; required fields
+
+Alert/Insight additions
+
+- “Top category”, “largest expense”, “spike alert” via chat
+
+Scalability considerations
+
+- Pluggable extraction layer (OCR provider swap)
+
+- Product adapter interface for future PetroIT integration
+ 
+BRD Flow Diagram (high level)
+
+User → Upload Receipt → Extract Fields → Suggest Category → User Confirms → Report Generated → Chat Insights
+ 
+ 
+====================================================================
+
+SECTION 2 – FRD (FINAL MVP)
+
+====================================================================
+ 
+1. Feature Overview (max 4 lines)
+
+Users upload a receipt image, system extracts key fields and suggests a category with confidence, user confirms/edits, then generates an exportable report. A chat panel answers questions based on the generated report data.
+ 
+2. User Flow (step-by-step concise flow)
+
+1) Upload receipt image
+
+2) System extracts fields (OCR or fallback JSON)
+
+3) System suggests category (popup)
+
+4) User edits/accepts fields and category → Confirm
+
+5) Report view updates (category totals + list)
+
+6) Export CSV (PDF optional)
+
+7) User asks questions in Chat Insights → answers generated from report data
+ 
+3. Functional Requirements (numbered, clear, testable)
+ 
+Receipt Intake & Extraction
+
+FR1 System shall accept receipt image upload (JPG/PNG).
+
+FR2 System shall extract merchant name, date, and total amount.
+
+FR3 System shall display extracted fields in editable form.
+
+FR4 System shall support “Fallback Extraction Mode” using sample extracted JSON if OCR fails.
+ 
+Categorization
+
+FR5 System shall suggest an expense category based on extracted content.
+
+FR6 System shall display category confidence (High/Medium/Low or %).
+
+FR7 System shall allow user to change category before confirm.
+ 
+Confirmation & Report
+
+FR8 System shall require user confirmation before including expense in report.
+
+FR9 System shall display report grouped by category with totals and item list.
+
+FR10 System shall export report as CSV (mandatory).
+
+FR11 System should export report as PDF (optional if time).
+ 
+Configuration (MVP-lite)
+
+FR12 System shall allow show/hide toggles for report columns (merchant/date/amount/category).
+ 
+Chat Insights (Add-on)
+
+FR13 System shall provide a chat panel on the report screen.
+
+FR14 System shall answer questions using the current report dataset (JSON).
+
+FR15 System shall support at least these queries:
+
+- Top spending category?
+
+- Total spend?
+
+- Largest expense?
+
+- Show travel expenses
+
+- Any unusual/high expenses?
+
+FR16 System shall ask a clarifying question if user query is ambiguous.
+ 
+4. Input Specifications
+
+- Receipt image file (JPG/PNG)
+
+- User edits: merchant/date/amount/category
+
+- Optional: expense type (Personal/Business dropdown)
+ 
+5. Output Specifications
+
+- Structured expense object: merchant, date, amount, category, confidence
+
+- Report dataset: totals by category + list of expenses
+
+- Chat response: answer + referenced values (category/amount/date)
+ 
+6. Validation Rules
+
+- Amount must be numeric and > 0
+
+- Date must be valid format (basic validation)
+
+- Merchant required (cannot be empty)
+
+- Category required (must be selected)
+ 
+7. Error Handling & Edge Cases
+
+- Blurry receipt → low confidence + prompt to edit
+
+- Missing fields → mark required field missing
+
+- OCR failure → fallback mode prompt
+
+- Export failure → retry message
+
+- Duplicate receipt (optional) → warning, allow confirm anyway
+ 
+8. AI Behavior Logic
+
+Extraction:
+
+Input: receipt image OR extracted text; plus category list (static mapping)
+
+Processing: OCR → parse fields → category inference → confidence heuristic
+
+Output: structured JSON + category suggestion + confidence
+ 
+Chat:
+
+Input: user query + report JSON
+
+Processing: compute aggregates deterministically; use LLM for phrasing only
+
+Output: answer + referenced values + confidence
+ 
+9. Assumptions & Constraints
+
+- MVP may run single-user, no authentication
+
+- Demo uses sample receipts and/or extracted JSON for reliability
+
+- Chat uses report JSON; no SQL generation in MVP
+ 
+FRD Flow Diagram
+
+Upload → Extract → Suggest Category → Edit/Confirm → Report Update → Export
+
+Report JSON → Chat Query → Insight Answer
+ 
+ 
+====================================================================
+
+SECTION 3 – TRD (FINAL MVP)
+
+====================================================================
+ 
+1. Technical Overview (max 5 lines)
+
+MVP uses a web UI and a lightweight API. Receipt extraction is implemented via OCR (optional) with a safe fallback using pre-extracted JSON. Category suggestion uses rule + LLM assist if needed. Report generation uses structured data produced after user confirmation. Chat Insights computes answers from the report dataset and uses Claude to produce natural-language responses.
+ 
+2. Architecture Flow Description
+
+Frontend (React)
+
+→ Backend API (FastAPI/Node)
+
+→ Extraction Layer (OCR or fallback JSON)
+
+→ Parsing + Category Engine
+
+→ Report Builder (in-memory or simple storage)
+
+→ Export Generator (CSV; PDF optional)
+
+→ Chat Insights Engine (report JSON + query → answer)
+ 
+3. Technology Stack
+
+Frontend: React (simple SPA)
+
+Backend: FastAPI (Python) or Node/Express
+
+OCR: Tesseract optional; fallback JSON mandatory
+
+LLM: Claude (category suggestion + chat phrasing)
+
+Storage: In-memory (MVP). Optional SQLite/Postgres only if already ready.
+
+Deployment: local or quick host (optional)
+ 
+4. API Design (endpoint, request, response structure)
+ 
+POST /extract
+
+Request: receipt_image (file) OR receipt_id (for sample)
+
+Response:
+
+{
+
+  merchant,
+
+  date,
+
+  amount,
+
+  currency (optional),
+
+  suggested_category,
+
+  field_confidence: {merchant, date, amount, category}
+
+}
+ 
+POST /confirm
+
+Request:
+
+{
+
+  merchant, date, amount, category,
+
+  expense_type,
+
+  receipt_ref
+
+}
+
+Response: { status, expense_id }
+ 
+GET /report
+
+Response:
+
+{
+
+  totals_by_category: [...],
+
+  expenses: [...]
+
+}
+ 
+GET /export/csv
+
+Response: file download
+ 
+POST /chat-insight
+
+Request:
+
+{
+
+  report_data (or report_id),
+
+  user_query
+
+}
+
+Response:
+
+{
+
+  answer,
+
+  referenced_values,
+
+  confidence
+
+}
+ 
+5. Data Flow (processing pipeline)
+
+Image → OCR/Fallback → Parsed fields → Category suggestion → User edits → Confirm → Report dataset → Export/Chat
+ 
+6. Data Model (simplified)
+
+Expense:
+
+- id
+
+- merchant
+
+- date
+
+- amount
+
+- category
+
+- expense_type
+
+- confidence_scores
+
+Report:
+
+- expenses[]
+
+- totals_by_category[]
+
+ChatRequest:
+
+- query
+
+- context(report)
+ 
+7. Security & Access Control (MVP)
+
+- Validate file types and size limits
+
+- Sanitize any text shown in UI
+
+- No secrets in frontend; Claude key in backend env vars
+
+- Optional: no persistence of receipts beyond session for MVP
+ 
+8. Performance & Scalability Considerations
+
+- Stateless endpoints for extract/chat
+
+- Modular extraction layer (swap OCR provider)
+
+- Future: persist to DB + adapter layer for PetroIT product integration
+ 
+9. Logging & Monitoring
+
+- Log extraction success/failure, latency
+
+- Log chat queries and response time (no PII stored for MVP)
+ 
+10. Risks & Mitigation
+
+- OCR unreliable → fallback JSON mode mandatory
+
+- Over-scope → CSV only mandatory; PDF optional
+
+- Chat wrong answers → deterministic aggregates + LLM only for phrasing
+
+- Demo risk → pre-load sample receipts + show both modes
+ 
+TRD Architecture Flow Diagram
+
+[React UI] → [/extract] → [OCR/Fallback] → [Parser+Category] → [User Confirm] → [Report JSON] → [Export CSV]
+
+[Report JSON] + [User Query] → [/chat-insight] → [Aggregate + Claude Response] → [Chat UI]
+ 
+ 
+====================================================================
+
+FIGMA/STITCH UI PROMPT (MVP, 4 SCREENS)
+
+====================================================================
+ 
+Design a clean enterprise web UI for “Receipt Slayer – Expense Intelligence Engine (MVP)”.
+
+Use a minimal layout with a vertical flow: Input → Action → Result. Provide 4 screens with desktop layouts and responsive behavior notes.
+ 
+Screen 1: Upload
+
+- Header: Receipt Slayer
+
+- Drag & drop upload card (JPG/PNG) + “Upload” button (primary CTA)
+
+- Toggle: Extraction Mode (Demo Safe: Sample JSON / OCR Mode)
+
+- Thumbnail preview area (optional)
+
+- State: loading indicator “Extracting…”
+ 
+Screen 2: Review & Categorize
+
+- Left panel: receipt image preview
+
+- Right panel: editable fields (merchant, date, amount)
+
+- Category suggestion popup: Suggested category + confidence + buttons Accept / Change
+
+- Category dropdown (editable) + expense type dropdown (Personal/Business)
+
+- Primary CTA: Confirm Expense
+
+- Low-confidence highlighting pattern (border + “Needs review” tag)
+ 
+Screen 3: Report
+
+- Summary cards: Total Spend, #Receipts, Top Category
+
+- Table: expenses list (merchant/date/amount/category)
+
+- Column toggles (checkbox show/hide)
+
+- Buttons: Export CSV (primary), Export PDF (secondary optional)
+ 
+Screen 4: Chat Insights (panel on Report screen)
+
+- Right-side chat drawer
+
+- Suggested questions chips (Top category, Total spend, Largest expense, Show travel)
+
+- Chat bubbles + typing indicator
+
+- Responses include “Referenced values” section (numbers/categories)
+ 
+Design rules:
+
+- One primary CTA per screen
+
+- Structured output sections
+
+- Clear loading/error states
+
+- Professional enterprise look
+ 
+ 
+====================================================================
+
+CLAUDE CODE BUILD PROMPT (LOW TOKEN, HIGH CONTROL)
+
+====================================================================
+ 
+Build Receipt Slayer MVP (React + FastAPI or Node) with this flow:
+
+1) Upload receipt → /extract returns {merchant,date,amount,suggested_category,confidence per field}. Include “Sample JSON mode” fallback.
+
+2) Review screen: editable fields + category popup accept/change + confirm button calling /confirm.
+
+3) Report screen: show totals by category + table + export CSV.
+
+4) Chat Insights: /chat-insight answers questions using report JSON by computing aggregates deterministically; Claude only used to phrase answer.
+
+Constraints: MVP only, no auth, keep code simple, ensure demo reliability, handle errors, add loading states, and keep APIs stateless.
+ 
+ 
