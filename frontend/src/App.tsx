@@ -78,16 +78,6 @@ function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </main>
-
-        <footer className="mt-auto bg-slate-900 py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-            <img
-              src="/mozaic_poweredbyPetroIT_white.png"
-              alt="Mozaic — Powered by Petro IT"
-              className="h-12 object-contain"
-            />
-          </div>
-        </footer>
       </div>
     </BrowserRouter>
   );
